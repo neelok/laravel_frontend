@@ -46,9 +46,9 @@ class ParsingController extends Controller
         }
 
         // $car_trims = 
-        if(!empty($car_final_year) && !empty($car_final_brand) && !empty($car_final_model)){
-            $trim_arr = (new GetCarTrims)->trims($car_final_year, $car_final_brand, $car_final_model);
-        }
+        // if(!empty($car_final_year) && !empty($car_final_brand) && !empty($car_final_model)){
+        //     $trim_arr = (new GetCarTrims)->trims($car_final_year, $car_final_brand, $car_final_model);
+        // }
 
 
         $other_features = str_replace($car_final_brand, "", $var);
