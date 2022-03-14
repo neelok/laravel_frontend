@@ -20,8 +20,8 @@ class ParsingController extends Controller
     // this functions returns car brand model year and other features based on title of the data scraped
     // thin one returns an array
 
-    public function bmyo(){
-        $string = "2012 nissan altima";
+    public function bmyo($string){
+        // $string = "2012 nissan altima";
         $var = strtolower($string);
         $arr = explode(" ", $var);
         $car_final_year = intval($arr[0]);
@@ -53,7 +53,7 @@ class ParsingController extends Controller
 
         $other_features = str_replace($car_final_brand, "", $var);
         $other_features = str_replace($car_final_model, "", $other_features);
-        $other_features = str_replace($arr[0], "", $other_features);
+        $other_features = str_replace($arr[0], "", $other_features); 
 
 
 
