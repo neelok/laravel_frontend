@@ -4,7 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
+
+// use App\Http\Controllers\UrlScrapper;
+use Illuminate\Support\Stringable;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,8 +19,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->call(function(){
-
+        $schedule->call('App\Http\Controllers\UrlScrapper@callfordata')->everyMinute()
+        -> onSuccess(function(Stringable $output){
+            echo $output;
+        })
+        -> onFailure(function(Stringable $output){
+            echo "failed task";
         });
     }
 

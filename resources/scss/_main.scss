@@ -2,10 +2,37 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-.antialiased {
-    .logo {
-        position: fixed;
-        left: 1.5rem;
-        top: 0.5rem;
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    position: relative;
+    #table_cars_deal_wrapper {
+        border: 1px solid grey;
+        border-radius: 20px;
+        padding: 30px;
+    }
+    td {
+        text-align: center;
+    }
+    td:nth-child(6) {
+        text-align: right;
+    }
+    td:nth-last-child(1) {
+        text-align: right;
+    }
+    #table_cars_deal_length {
+        display: none;
+    }
+    .newcarsadded {
+        width: 300px;
+        height: 30px;
+        background-color: greenyellow;
+        position: absolute;
+        top: 0;
+        text-align: center;
+        line-height: 30px;
+        display: none;
     }
 }
