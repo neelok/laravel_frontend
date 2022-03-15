@@ -52,7 +52,7 @@ $(function() {
         })
     }
 
-    // setInterval(getnewrows, 8000)
+    setInterval(getnewrows, 8000)
 
     table.on("select", function() {
         console.log("clicked")
