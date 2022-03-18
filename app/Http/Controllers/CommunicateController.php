@@ -36,7 +36,7 @@ class CommunicateController extends Controller
 
         $email->setFrom("alec@oasysdigitalarts.com", "Adimn");
         $email->setSubject($email_subject);
-        $email->addTo("a_mohamad905@hotmail.com", "Moe");
+        $email->addTo("neelok@msn.com", "Moe"); 
         $email->addContent('text/plain', $email_body_text);
 
         $email->addContent("text/html", $email_body_html);

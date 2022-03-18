@@ -22,8 +22,8 @@ use App\Http\Controllers\DataTableController;
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 
-// This is the scraping call 
-Route::get('/test', [UrlScrapper::class, 'callfordata']);
+// This is the for test scraping call 
+// Route::get('/test', [UrlScrapper::class, 'callfordata']);
 
 // This one fills up the data for live view ... return the data for the ajax call
 Route::get('/data/{id}', function($id){

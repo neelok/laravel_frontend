@@ -173,6 +173,8 @@ class UrlScrapper extends Controller
             'TotalNewCarsAdded' => $this->total_inserted,
             'error' => false
         ]);
+
+        return $this->total_inserted." records inserted";
         
     }
 }
