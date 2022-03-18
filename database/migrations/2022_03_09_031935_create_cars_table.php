@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             // $table->timestamps();
-            $table->string('brand', 255)->default(null);
-            $table->string('models', 255)->default(null);
-            $table->string('types', 255)->default(null);
+            $table->string('brand', 255)->nullable();
+            $table->string('models', 255)->nullable();
+            $table->string('types', 255)->nullable();
         });
     }
 
