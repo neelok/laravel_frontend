@@ -57,8 +57,8 @@ class ParsingController extends Controller
 
 
 
-        // return ["brand" => $car_final_brand, "model" => $car_final_model, "year"=> $car_final_year, "other_features" => $other_features];
-        return $trim_arr;
+        return ["brand" => $car_final_brand, "model" => $car_final_model, "year"=> $car_final_year, "other_features" => $other_features];
+        // return $trim_arr;
        
     }
 
