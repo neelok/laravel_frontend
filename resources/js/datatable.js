@@ -28,7 +28,10 @@ $(function() {
 
     var getnewrows = function() {
         var id = $("tr:first-child td:first-child").text()
-        var url = "http://127.0.0.1:8000/data/" + "18"
+        if (id == "") {
+            id = 0
+        }
+        var url = "http://54.205.62.218/data/" + id
 
 
 
