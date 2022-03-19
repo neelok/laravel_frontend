@@ -28,7 +28,7 @@ $(function() {
     var rowsloaded = $("tr:first-child td:first-child").text()
     var getnewrows = function() {
         var id = $("tr:first-child td:first-child").text()
-        console.log(id)
+            // console.log(id)
         if (id > rowsloaded) {
             rowsloaded = id
 
