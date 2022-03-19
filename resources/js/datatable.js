@@ -25,35 +25,41 @@ $(function() {
     });
 
 
-
+    var rowsloaded = $("tr:first-child td:first-child").text()
     var getnewrows = function() {
         var id = $("tr:first-child td:first-child").text()
         console.log(id)
-        var url = "http://54.205.62.218/data/" + id
+        if (id > rowsloaded) {
+            rowsloaded = id
+
+            var url = "http://54.205.62.218/data/" + id
 
 
 
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: "",
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                table.rows.add(response).draw(false)
-                var rows = Object.keys(response).length
-                if (rows > 0) {
-                    $(".newcarsadded").text(rows + " Cars added").slideDown('slow', function() {
-                        setTimeout(function() { $(".newcarsadded").slideUp('slow') }, 5000)
-                    })
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: "",
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    table.rows.add(response).draw(false)
+                    var rows = Object.keys(response).length
+                    if (rows > 0) {
+                        $(".newcarsadded").text(rows + " Cars added").slideDown('slow', function() {
+                            setTimeout(function() { $(".newcarsadded").slideUp('slow') }, 5000)
+                        })
+                    }
+
                 }
+            })
 
-            }
-        })
+        }
+
     }
 
-    setInterval(getnewrows, 2000)
+    setInterval(getnewrows, 5000)
 
 
 
