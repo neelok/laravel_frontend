@@ -39,6 +39,6 @@ class GoScraping extends Command
     public function handle()
     {
         // echo "Hello from scrapper";
-        (new UrlScrapper)->callfordata();
+        echo (new UrlScrapper)->callfordata();
     }
 }

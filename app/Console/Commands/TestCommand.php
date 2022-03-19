@@ -3,23 +3,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\CommunicateController;
 
-class SendGoodDeals extends Command
+class TestCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'deals:send';
+    protected $signature = 'test:it';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This will look thru the data and send the good deals to the emails specified';
+    protected $description = 'This will just a test command to test the functionality';
 
     /**
      * Create a new command instance.
@@ -38,7 +37,6 @@ class SendGoodDeals extends Command
      */
     public function handle()
     {
-        // (new CommunicateController)->sendgooddeals();
-        echo (new CommunicateController)->sendgooddeals();
+        echo "test with scheduler working";
     }
 }
