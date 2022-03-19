@@ -15,6 +15,8 @@ class CommunicateController extends Controller
         $this->cardealsarray = [];
     }
 
+
+
     public function sendmail(){
         $success = 'false';
         $email = new \SendGrid\Mail\Mail();

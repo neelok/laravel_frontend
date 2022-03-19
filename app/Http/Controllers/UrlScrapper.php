@@ -17,6 +17,7 @@ class UrlScrapper extends Controller
         $this->total_inserted = 0;
     }
 
+
     public function callfordata(){
 
         // Sending an api request to scrape the data
