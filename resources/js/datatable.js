@@ -4,7 +4,7 @@ $(function() {
         'stateSave': false,
         'order': [0, 'desc'],
         'ajax': {
-            "url": "http://127.0.0.1:8000/data/0",
+            "url": "http://54.205.62.218/data/0",
             "type": 'GET'
         },
         'columns': [
@@ -28,9 +28,7 @@ $(function() {
 
     var getnewrows = function() {
         var id = $("tr:first-child td:first-child").text()
-        if (id == "") {
-            id = 0
-        }
+        console.log(id)
         var url = "http://54.205.62.218/data/" + id
 
 
@@ -55,11 +53,9 @@ $(function() {
         })
     }
 
-    setInterval(getnewrows, 8000)
+    setInterval(getnewrows, 2000)
 
-    table.on("select", function() {
-        console.log("clicked")
-    })
+
 
 
 
