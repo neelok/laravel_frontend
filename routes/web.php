@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UrlScrapper;
 use App\Http\Controllers\DataTableController;
 
+use App\Http\Controllers\ParsingController;
+
 
 
 /*
@@ -23,7 +25,7 @@ Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 
 // This is the for test scraping call 
-Route::get('/test', [UrlScrapper::class, 'callfordata']);
+Route::get('/test', [ParsingController::class, 'cleandb']); 
 
 // This one fills up the data for live view ... return the data for the ajax call
 Route::get('/data/{id}', function($id){

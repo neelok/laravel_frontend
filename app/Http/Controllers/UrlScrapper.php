@@ -34,7 +34,7 @@ class UrlScrapper extends Controller
 
             if(array_key_exists('location', $scrape_result )){
                 $location = $scrape_result['location']; 
-                // returns datetime the ad was posted\
+                // returns datetime the ad was posted\        
                 
             } else {
                 $location = '';
@@ -87,10 +87,23 @@ class UrlScrapper extends Controller
                 $dealer = $scrape_result['dealer'];
             } 
 
-            $description = strtolower($description);
+            if(!$dealer){
+                $description = strtolower($description);
+                if (str_contains($description, "dealer")){
+                    $dealer = true;
+                } else {
+                    $dealer = false;
+                }
+            }
 
-            if (str_contains($description, "dealer")){
-                $dealer = true;
+            
+
+
+
+            if(str_contains($pageurl, "part")){
+                $parts = true;
+            } else {
+                $parts = false;
             }
 
             // Creating an unique id so to prevent same data entering the database twice
@@ -103,14 +116,14 @@ class UrlScrapper extends Controller
             // so long as the data doesnt already exist in the database and it is not posted by a dealer
             // this data needs to cleaned up and added
 
-            if (DB::table('scrapes')->where('uid', $uid)->doesntExist() && !$dealer) {
+            if (DB::table('scrapes')->where('uid', $uid)->doesntExist() && !$dealer && !$parts) {
                 $id = DB::table('scrapes')->insertGetId(
                     [
                         'pictureurl' => $picture, 
                         'pageurl' => $pageurl,
                         'price' => $price, 
                         'title' => $title,
-                        'description' => $description, 
+                        'description' => $description,  
                         'distance' => $distance,
                         'kms' => $kms, 
                         'location' => $location,
@@ -121,14 +134,14 @@ class UrlScrapper extends Controller
                 $this->total_inserted+=1;
 
                 // year brand model and other features
-                $cln__title_arr = $cln__title_obj->bmyo($title);
+                $cln__title_arr = $cln__title_obj->mmyo($title, $description);
                 $cln__year = $cln__title_arr['year'];
-                $cln__brand = $cln__title_arr['brand'];
+                $cln__make = $cln__title_arr['make'];
                 $cln__model = $cln__title_arr['model'];
-                $cln__other__features = $cln__title_arr['other_features'];
+                $cln__trim = $cln__title_arr['trim'];
 
                 // mileage and drivetype
-                $cln__title_arr = $cln__title_obj->kdt($kms);
+                $cln__title_arr = $cln__title_obj->kdt($kms); 
                 $cln__mileage = $cln__title_arr['mileage'];
                 $cln__drivetype = $cln__title_arr['drivetype'];
 
@@ -142,19 +155,25 @@ class UrlScrapper extends Controller
                 // page url
                 $cln__pageurl = "https://www.kijiji.ca".$pageurl;
 
-                DB::table('clean_scrapes')->insert([
-                    'year' => $cln__year,
-                    'brand' => $cln__brand,
-                    'model' => $cln__model,
-                    'otherfeatures' => $cln__other__features,
-                    'mileage' => $cln__mileage,
-                    'drivetype' => $cln__drivetype,
-                    'datetimeposted' => $cln__datetime_posted,
-                    'price' => $cln__price,
-                    'pageurl' => $cln__pageurl,
-                    'trim' => ""
+                if($cln__make != ""){
+                    DB::table('clean_scrapes')->insert([
+                        'year' => $cln__year,
+                        'brand' => $cln__make,
+                        'model' => $cln__model,
+                        'otherfeatures' => "",
+                        'mileage' => $cln__mileage,
+                        'drivetype' => $cln__drivetype,
+                        'datetimeposted' => $cln__datetime_posted,
+                        'price' => $cln__price,
+                        'pageurl' => $cln__pageurl,
+                        'trim' => $cln__trim,
+                        'uid' => $uid
+    
+                    ]);
 
-                ]);
+                }
+
+
             }
 
 

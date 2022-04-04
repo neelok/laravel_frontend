@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\ParsingController2;
 
 class TestCommand extends Command
 {
@@ -37,6 +38,7 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        echo "test with scheduler working";
+        $test = (new ParsingController2)->mmyo();
+
     }
 }
