@@ -22,13 +22,14 @@ class CommunicateController extends Controller
         $email = new \SendGrid\Mail\Mail();
 
         $contents = $this->cardealsarray;
+
         $count = count($contents);
         $email_body_html = "";
         $email_body_text = "";
         $i = 1;
         foreach($contents as $content){
-            $email_body_html .= "<h2>".$content['year']." | ".$content['make']." | ".$content['model']." | $".$content['price'].".00</h2><div><a href = '".$content['url']."'>Click Here </a> For the respective ad on Kijiji</div><br><br><hr style = 'width: 50%; background-color: gray; margin-left: 0; margin-right: auto'>";
-            $email_body_text .= "Year: ".$content['year'].", Make: ".$content['make'].", Model: ".$content['model'].", Url for the Ad: ".$content['url'];
+            $email_body_html .= "<h2>".$content['mileage']."kms | ".$content['year']." | ".$content['make']." | ".$content['model']." | ".$content['trim']." | $".$content['price'].".00</h2><div><a href = '".$content['url']."'>Click Here </a> For the respective ad on Kijiji</div><br><br><hr style = 'width: 50%; background-color: gray; margin-left: 0; margin-right: auto'>";
+            $email_body_text .= "Mileage: ".$content['mileage'].", Year: ".$content['year'].", Make: ".$content['make'].", Model: ".$content['model'].", Trim".$content['trim'].", Url for the Ad: ".$content['url'];
             $i++;
 
         }
@@ -71,12 +72,14 @@ class CommunicateController extends Controller
         } else {
             Storage::disk('local')->put("test.txt", $lastId);
         }
+
+        
        
         $this-> lastrowprocessed = DB::table('clean_scrapes')->orderBy('id', 'desc')->first()->id;
         
         $newrows = DB::table('clean_scrapes')->where('id', '>', $lastId)->get();
         $count = $newrows->count();
-
+        
         if($count > 0){
             // do all the filtering and email
             // retrieve the last id from the db and write it back to the file
@@ -87,27 +90,63 @@ class CommunicateController extends Controller
             foreach($newrows as $newrow){
                 $year = $newrow->year;
                 $mileage = $newrow ->mileage;
+                $make = $newrow->brand;
+                $model = $newrow->model;
+                $trim = $newrow ->trim;
+                $price = $newrow->price;
 
-                if($year >2011 && $mileage > 0 && $mileage < 200001){
+                if($this->isRecordcomplete($year, $mileage, $model, $trim, $price)){
                     $arr['year'] =$year;
                     $arr['mileage'] = $mileage;
-                    $arr['make'] = $newrow->brand;
-                    $arr['model'] = $newrow->model;
-                    $arr['price'] =  $newrow->price;
-                    $arr['mileage']  = $newrow->mileage;
+                    $arr['make'] = $make;
+                    $arr['model'] = $model;
+                    $arr['price'] =  $price;
+                    $arr['trim'] = $trim;
                     $arr['url'] = $newrow->pageurl;
                     array_push($this->cardealsarray, $arr);
                 }
 
             }
-
-            return $this->sendmail();
+            
         } else {
             // return an indication that nothing new found
             return false;
         }
+        $clean_count = count($this->cardealsarray);
+
+        if($clean_count > 0 ){
+            return $this->sendmail();
+        } else {
+            return false;
+        }
 
         
+
+    }
+
+    public function isRecordcomplete($year, $mileage, $model, $trim, $price){
+        if($year < 2011){
+            return false;
+        }
+        if($mileage < 0 || $mileage > 200000){
+            return false;
+        }
+
+        if($model == "" ){
+            return false;
+        }
+
+        if($trim == ""){
+            return false;
+        }
+
+        if($price <= 0){
+            return false;
+        }
+        
+        return true;
+
+
 
     }
 }
