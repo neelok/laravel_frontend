@@ -37,7 +37,7 @@ class CommunicateController extends Controller
 
         
 
-        $email->setFrom("alec@oasysdigitalarts.com", "Adimn");
+        $email->setFrom("alec@oasysdigitalarts.com", "Admin");
         $email->setSubject($email_subject);
         $email->addTo("neelok@msn.com", "alok");
         $email->addContent('text/plain', $email_body_text);
@@ -128,7 +128,11 @@ class CommunicateController extends Controller
         if($year < 2011){
             return false;
         }
-        if($mileage < 0 || $mileage > 200000){
+        if($mileage <= 0 ){
+            return false;
+        }
+
+        if($mileage >= 200000){
             return false;
         }
 
